@@ -13,11 +13,11 @@ namespace ConsoleApp1
             _conneString = ConfigReader.GetConnectionString("Dapper");
         }
 
-        public IEnumerable<Customer> Get()
+        public IEnumerable<DapperCustomer> Get()
         {
             using (SqlConnection conn = new SqlConnection(_conneString))
             {
-                return conn.Query<Customer>(@"SELECT * FROM Customers");
+                return conn.Query<DapperCustomer>(@"SELECT * FROM Customers");
             }
         }
     }

@@ -7,19 +7,23 @@ namespace ConsoleApp1
     {
         private readonly NorthwindContext _northwindContext;
 
-        public RunEfCore()
+        public RunEfCore(bool isTracking)
         {
             var conneString    = ConfigReader.GetConnectionString("EfCore");
             var optionsBuilder = new DbContextOptionsBuilder<NorthwindContext>();
             optionsBuilder.UseSqlServer(conneString);
-            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
+            optionsBuilder.UseQueryTrackingBehavior(isTracking ? QueryTrackingBehavior.TrackAll : QueryTrackingBehavior.NoTracking);
             _northwindContext = new NorthwindContext(optionsBuilder.Options);
         }
 
-        public IEnumerable<Customer> Get()
+        public IEnumerable<Customer> GetCustomer()
         {
             return _northwindContext.Customers;
+        }
+
+        public IEnumerable<DapperCustomer> GetDapperCustomer()
+        {
+            return _northwindContext.DapperCustomers;
         }
     }
 }
